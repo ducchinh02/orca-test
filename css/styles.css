@@ -875,6 +875,7 @@ input[type="date"].field__control:focus-within {
   display: flex;
   align-items: center;
   gap: 4px;
+  min-width: calc(2 * var(--tap-min) + 4px); /* reserve call + toggle so un-hiding the toggle moves nothing */
 }
 
 .header-phone, .header-cta { display: none; }
