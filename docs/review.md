@@ -1,8 +1,53 @@
 # Review: Mộc Sương Atelier landing page
 
-**Verdict (round 2): APPROVED**: all 7 polish items FIXED · 0 Blocker · 0 Major · 0 Minor · 1 Nit
+**FINAL verdict (round 3): APPROVED**: 3/3 items FIXED · 0 Blocker · 0 Major · 0 Minor · 0 Nit · no regressions
 
-The one open item is a new Nit, **R5**. It is a side effect of the R1 fix: on some cold loads the header call button can jump 48px. Apart from R5 the round introduced no regressions. All round-1 findings (R1–R4) are closed.
+Every finding across the three rounds (R1–R5) is closed. No new findings were raised.
+
+## Round 3 verification (final)
+
+**Date:** 2026-10-07. This was a narrow, read-only check of `index.html`, `css/styles.css` and the §5.10 line of `docs/design-spec.md`.
+
+I ran headless Chrome 154 over DevTools Protocol, using a fresh browser for each suite. I compared the current files side by side with the round-2 build taken from commit `3f6337c`.
+
+### The three items
+
+| Item | Status | Evidence |
+|---|---|---|
+| **R5** Header call button jump | **FIXED** | `css/styles.css:878` adds `min-width: calc(2 * var(--tap-min) + 4px)` to `.site-header__actions`.<br>• **Shifts:** I used the round-2 method: 10 cold loads at 375 (cache off; 7 at 4× CPU, 3 unthrottled). Header shifts: **0/10**. The round-2 build reproduced the bug at 1/10.<br>• The only shifts left (0.0055) come from the hero font swap and have been there since round 1.<br>• **Geometry with JS:** logo, actions, call, toggle, CTA, phone and header height are **identical to round 2** at 320, 375, 1024 and 1280.<br>• **Without JS at 375:** the call button now sits at its final position (267–311px; round 2 had it at 315–359px).<br>• Lighthouse reports CLS **0**, with no `layout-shifts` items. |
+| **N1** Product select label | **FIXED** | `index.html:824` and spec §5.10 line 805 now read "Nhờ tư vấn". Measured text vs space available:<br>• 320: 83.7/174px<br>• 375: 84/229px<br>• 768: 86/236px<br>• 1024: 87.5/153px<br>• 1100: 88/175px<br>• 1140: 88/187px<br>• 1440: 89/227px<br>The label is fully visible at every width; screenshots at 320, 1024 and 1100 confirm it. |
+| **N2** "Tết Nguyên đán" tile | **FIXED** | `index.html:532` is `Tết Nguyên&nbsp;đán`.<br>• At 320 it renders "Tết / Nguyên đán", so "Nguyên đán" stays on one line (screenshot). At 375, 768 and 1024 it fits on one line.<br>• No overflow, and tile and row heights are unchanged. The accessible name still reads "Tết Nguyên đán".<br>• Filter output is byte-identical to round 2.<br>• Clicking the Tết tile still sets the occasion to `tet` ("Tết Nguyên đán"), flashes the field and navigates to `#dat-hoa`. |
+
+### Change containment
+
+`git diff` against `3f6337c` (the committed round-2 state) shows **exactly the three edits** (4 insertions, 3 deletions):
+
+- `css/styles.css`: +1 line
+- `index.html`: 2 lines
+- `docs/design-spec.md`: 1 line
+
+The committed byte sizes equal the round-2 files I verified (66 841 / 48 405 / 15 317 / 108 142 B). Reverse-applying the three edits gives files **string-identical to HEAD**, and `js/main.js` is untouched.
+
+### Regression essentials
+
+| Check | Result |
+|---|---|
+| Horizontal overflow, 320–1440 | None: `scrollWidth == clientWidth` at 320, 375, 768, 1024, 1280 and 1440. Grids, page heights and touch targets are the same as round 2. |
+| Console | 0 errors and 0 warnings in every run |
+| #13 Mobile menu | Pass, identical to round 2. The only difference is the skip link's measured position partway through its 150ms slide-in (top 7px vs 0px); the skip-link code did not change this round. |
+| #17 Filter, #18 Prefill | Output byte-identical to round 2 (counts 6/3/3/2/1, exact status strings, all prefill paths) |
+| #27 No JS | Identical to round 2 at 375 and 1280 |
+| axe-core 4.10.2 | 0 violations at 375 and 1280 |
+| Nu validator 26.10.6 (local) | `index.html` and `styles.css`: "No errors found" |
+| Lighthouse 12.8.2, mobile (1 run) | Accessibility 100 · Best Practices 100 · SEO 100 · **CLS 0** (Performance 92, LCP 2.7 s) |
+
+### Notes
+
+These are not findings. The pre-existing spec-owner notes stay as recorded and are not re-raised: O3, and N2's "viết / tay" split at 1024.
+
+---
+
+**Round 2 verdict (history): APPROVED**: all 7 polish items FIXED · 0 Blocker · 0 Major · 0 Minor · 1 Nit (R5, fixed in round 3)
 
 ## Round 2 verification (polish round 1)
 

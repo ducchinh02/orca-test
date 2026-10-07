@@ -802,7 +802,7 @@ Required fields carry the HTML `required` attribute plus the visual `*`. Optiona
 
 **Occasion `<select>` options (value → label):** `""` → Chọn dịp tặng hoa · `sinh-nhat` → Sinh nhật · `tinh-yeu` → Tình yêu & Kỷ niệm · `phu-nu` → Ngày Phụ nữ 8/3 · 20/10 · `tet` → Tết Nguyên đán · `cuoi-hoi` → Cưới hỏi · `khai-truong` → Khai trương · `chia-buon` → Chia buồn · `doanh-nghiep` → Doanh nghiệp & Sự kiện · `khac` → Dịp khác
 
-**Product `<select>` options:** `""` → Nhờ Mộc Sương tư vấn
+**Product `<select>` options:** `""` → Nhờ tư vấn
 `<optgroup label="Hoa bán chạy">`: `dao-phai` → Đào Phai — 850.000₫ · `hong-nhung` → Hồng Nhung — 1.150.000₫ · `nang-ha` → Nắng Hạ — 720.000₫ · `phu-quy` → Phú Quý — 1.850.000₫ · `may-trang` → Mây Trắng — 490.000₫ · `tinh-tai` → Tĩnh Tại — 1.250.000₫
 `<optgroup label="Theo bộ sưu tập">`: `bst-thu-ha-noi` → Bộ sưu tập Thu Hà Nội — từ 590.000₫ · `bst-suong-mai` → Bộ sưu tập Sương Mai — từ 750.000₫ · `bst-hy-su` → Bộ sưu tập Hỷ Sự — từ 2.500.000₫
 
